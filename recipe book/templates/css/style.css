@@ -1,0 +1,74 @@
+a {
+	color: black;
+	font-family: Arial;
+}
+
+a:hover {
+	color: #720026;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.d-block {
+	/*vertical-align: middle;*/
+	/*object-fit: cover;*/
+}
+
+.editor {
+	padding-top: 5%;
+	padding-bottom: 5%;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.blurb {
+	padding-right: 5%;
+}
+
+.name {
+	font-family: "Dancing Script", cursive;
+	font-size: 30px;
+	padding-left: 20px;
+}
+
+.row {
+	display: flex;
+}
+
+small {
+	font-size: 18px;
+}
+
+.titletext {
+	opacity: 0;
+	height: 0px;
+	/*width: 100%;*/
+	color: white;
+}
+
+.titleimg {
+	opacity: 1;
+  	display: block;
+	width: 100%;
+	height: auto;
+	transition: .5s ease;
+	/*backface-visibility: hidden;*/
+}
+
+.title:hover .titletext {
+	background-color: rgba(0,0,0,0.35);
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 30px;
+	height: auto;
+	font-size: 20px;
+	position: absolute;
+  	top: 500px;
+  	right: 2%;
+	opacity: 1;
+	text-align: center;
+}

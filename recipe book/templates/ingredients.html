@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ingredient Picker</title>
+	{% include 'header.html' %}
+	<style>
+		{% include 'css/style.css' %}
+	</style>
+
+</head>
+<body>
+
+	<div>
+		<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
+			{% include 'navbar.html' %}
+		</nav>
+		<div class="title">
+			<img class="titleimg" src="static/images/ingredients.png" style="width: 100%; height: 550px; object-fit: cover;">
+			<div class="titletext">
+				<strong>Shown in this picture:</strong>
+				<br>
+				<p style="font-size: 18px;">Leafy Greens: kale, spinach, collard greens</p>
+			</div>
+		</div>
+	</div>
+	<div>
+		<form method="post" id="ingform" class="p-5" style="background-color: #dfc5ce;" >
+			<div class="form-group" id="form-group">
+			    <label for="ingredients" style="font-family:'Six Caps'; font-size: 50px; color: white;">select your ingredients: </label> <br>
+			    <div class="row">
+			    	{% for ingredient in ilist %}
+			    	<div class="col-3">
+			    		<input type="checkbox" name="ingredients" value="{{ ingredient }}"> {{ ingredient }} <br>
+			    	</div>
+				    {% endfor %}
+			    </div>
+			    <input type="submit" class="btn btn-secondary float-right" value="Find Me Recipes" >
+			    <br>
+			</div>
+		</form>
+	</div>
+	{% if selected == True %}
+	<div class="row">
+		<div class="col-3" style="background-color: #fde2d4; padding: 60px 30px;">
+			<h3>Selected Ingredients:</h3>
+			<ul>
+			{% for x in selected_list %}
+				<li>{{ x }}</li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class="recipes col-8" >
+			{% include 'cards.html' %}
+		</div>
+	</div>
+	{% endif %}
+	{% include 'footer.html' %}
+</body>
+</html>

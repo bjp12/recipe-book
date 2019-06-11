@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Recipes</title>
+	{% include 'header.html' %}
+	<style>
+		{% include 'css/style.css' %}
+	</style>
+</head>
+<body>
+	<div>
+		<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
+			{% include 'navbar.html' %}
+		</nav>
+		<div class="title">
+			<img class="titleimg" src="static/images/recipes_banner2.png" style="width: 100%; height: 550px; object-fit: cover;">
+			<div class="titletext">
+				<strong>Shown in this picture:</strong>
+				<br>
+				<p style="font-size: 18px;">Fried avocado tacos with avocado cilantro crema and jalapeño ranch</p>
+			</div>
+		</div>
+		
+	</div>
+	<div class="row">
+		<div class="col-3" style="background-color: #fde2d4; ">
+			<h3 style="padding: 20px; padding-top: 50px; text-align: center;">Meal Planning Made Easy</h3>
+			<div style="padding-left: 20px;">
+				<p>1. Select the ingredients you need to complete each recipe.</p>
+				<p>2. Click on the Build My Grocery List Button</p>
+				<p>3. Your grocery list is now copied to your clipboard. Paste it into your notes app or email for easy access!</p>
+			</div>
+		</div>
+		<div class="recipes col-8" style="background-color: white;">
+			{% include 'cards.html' %}
+		</div>
+	</div>
+	{% include 'footer.html' %}
+</body>
+</html>
