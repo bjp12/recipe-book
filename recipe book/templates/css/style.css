@@ -72,3 +72,27 @@ small {
 	opacity: 1;
 	text-align: center;
 }
+
+
+.presets {
+	display: flex;
+ 	align-items: center;
+  	justify-content: center;
+}
+
+.presets button {
+	margin: 10px;
+}
+
+.mealimg {
+	height: 400px;
+	width: 110%;
+	object-fit: cover;
+}
+
+.mealtitle {
+	text-align: center;
+	font-family: "Dancing Script";
+	color: white;
+	font-size: 40px;
+}

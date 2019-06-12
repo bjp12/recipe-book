@@ -7,21 +7,53 @@
 	<style>
 		{% include 'css/style.css' %}
 	</style>
+	<script>
+		function locka(){
+
+		}
+	</script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
 		{% include 'navbar.html' %}
 	</nav>
-	<div class="container row no-gutter" style="margin-left: auto; margin-right: auto">
-		<!-- <div class="col-1" style="background-color: white; height:100px"></div> -->
-		<div class="col-3" style="background-color: blue; height:1000px">
-			{% if data %}
-		</div>
-		<div class="col-3" style="background-color: black; height:1000px"></div>
-		<div class="col-3" style="background-color: green; height:1000px"></div>
-		<div class="col-3" style="background-color: yellow; height:1000px"></div>
+	<div style="width: 100%;">
+		<form method="post" class="p-5" style="background-color: #dfc5ce;" action="/meal-builder#plan">
+			<div class="form-group" id="form-group" ">
+				<span class="presets">
+					<button class="btn btn-secondary" name="change" value="american">Preset 1</button>
+					<button class="btn btn-secondary" name="change" value="italian">Preset 2</button>
+					<button class="btn btn-secondary" name="change" value="mexican">Preset 3</button>
+				</span>
+			</div>
 		
-		<!-- <div class="col-1" style="background-color: white; height:100px"></div>	 -->
+			<div id="plan" class="container row no-gutter" style="margin-left: auto; margin-right: auto;">
+				<!-- <div class="col-1" style="background-color: white; height:100px"></div> -->
+					<div class="col-3 meal"  >
+						<p class="mealtitle">Appetizer</p>
+						<button name="change" value="appetizer" style="padding: 0px"><img  class="mealimg" src="{{ 'static/images/mealbuilder/'+appetizers[0]+'.png' }}"></button>
+						
+					</div>
+					<div class="col-3 meal" >
+						<p class="mealtitle">Entrée</p>
+						<button name="change" value="entree" style="padding: 0px"><img id = "entree" class="mealimg" src="{{ 'static/images/mealbuilder/'+entrees[0]+'.png' }}"></button>
+						
+					</div>
+					<div class="col-3 meal" >
+						<p class="mealtitle">Dessert</p>
+						<button name="change" value="dessert" style="padding: 0px"><img id = "dessert" class="mealimg" src="{{ 'static/images/mealbuilder/'+desserts[0]+'.png' }}"></button>
+						
+					</div>
+					<div class="col-3 meal" >
+						<p class="mealtitle">Drink</p>
+						<button class="btn btn-secondary" name="change" value="drink" style="padding: 0px"><img id = "drink" class="mealimg" src="{{ 'static/images/mealbuilder/'+drinks[0]+'.png' }}"></button>
+						
+					</div>
+				
+				<!-- <div class="col-1" style="background-color: white; height:100px"></div>	 -->
+			</div>
+		</form>
 	</div>
+	{% include 'footer.html' %}
 </body>
 </html>

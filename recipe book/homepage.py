@@ -40,6 +40,12 @@ for item in datadict:
     cuisines[item_row['Cuisine'].item()].append(name)
     times[item_row['Prep Time'].item()].append(name)
 
+
+appetizers = data_pd.loc[data_pd["Meal"] == "appetizer"]["Name"].tolist()
+entrees = data_pd.loc[data_pd["Meal"] == "entrée"]["Name"].tolist()
+desserts = data_pd.loc[data_pd["Meal"] == "dessert"]["Name"].tolist()
+drinks = data_pd.loc[data_pd["Meal"] == "drink"]["Name"].tolist()
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -64,14 +70,60 @@ def ingredients():
         )
     return render_template('ingredients.html', ilist = ingredient_list, checked= "", data = datadict, selected=False)
 
-@app.route('/meal-builder')
+@app.route('/meal-builder', methods=["GET", "POST"])
 def meal_builder():
-    return render_template('meal-builder.html')
+    presets = {
+        "american":["quinoa", "mexican-pizza", "oreo-truffles", "mojito"],
+        "italian":["quinoa", "ravioli", "cake", "mojito"],
+        "mexican":["quinoa", "spinach-puffs", "chocchipcookies", "mojito"]
+    }
+
+    builder = {
+        "appetizer": appetizers,
+        "entree": entrees,
+        "dessert": desserts,
+        "drink": drinks
+    }
+
+    if request.method == 'POST':
+        result = request.form.get('change')
+        if result in presets.keys():
+            preset = presets[result]
+            appetizers.remove(preset[0])
+            appetizers.insert(0, preset[0])
+            entrees.remove(preset[1])
+            entrees.insert(0, preset[1])
+            desserts.remove(preset[2])
+            desserts.insert(0, preset[2])
+            drinks.remove(preset[3])
+            drinks.insert(0, preset[3])
+        else:
+            col = builder[result]
+            first = col[0]
+            col.remove(col[0])
+            col.append(first)
+
+        return render_template('meal-builder.html', 
+            data = datadict,
+            appetizers = appetizers,
+            entrees = entrees,
+            desserts = desserts,
+            drinks = drinks
+        )
+
+    else:
+        return render_template('meal-builder.html', 
+            data=datadict,
+            appetizers = appetizers,
+            entrees = entrees,
+            desserts = desserts,
+            drinks = drinks
+        )
 
 @app.route('/recipes')
 @app.route('/recipes-time')
 def recipes_time():
-    my_order = ["breakfast", "entrée", "dessert"]
+    my_order = ["breakfast", "appetizer","entrée", "dessert", "drink"]
     order = {key: i for i, key in enumerate(my_order)}
     my_filters = sorted([(k,meals[k]) for k in meals], key=lambda d:order[d[0]])
     return render_template('recipes.html', 
