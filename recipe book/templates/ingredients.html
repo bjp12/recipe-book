@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div>
-		<form method="post" id="ingform" class="p-5" style="background-color: #dfc5ce;" >
+		<form method="post" id="ingform" class="p-5" style="background-color: #dfc5ce;" action="/ingredients#result">
 			<div class="form-group" id="form-group">
 			    <label for="ingredients" style="font-family:'Six Caps'; font-size: 50px; color: white;">select your ingredients: </label> <br>
 			    <div class="row">
@@ -40,7 +40,7 @@
 		</form>
 	</div>
 	{% if selected == True %}
-	<div class="row">
+	<div class="row" id="result">
 		<div class="col-3" style="background-color: #fde2d4; padding: 60px 30px;">
 			<h3>Selected Ingredients:</h3>
 			<ul>

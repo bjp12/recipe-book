@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+	{% include 'header.html' %}
+	<style>
+		{% include 'css/style.css' %}
+	</style>
+</head>
+<body>
+	<di id="list">
+		<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
+			{% include 'navbar.html' %}
+		</nav>
+		<form method="post" action="/search">
+			<ul>
+			{% for name in data['Full Name'] %}
+				<li><input type="submit" class="links" name="search" value="{{ name }}" ></li>
+			{% endfor %}
+			</ul>
+		</form>
+	</div>
+	{% include 'footer.html' %}
+</body>
+</html>

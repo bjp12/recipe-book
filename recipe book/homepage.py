@@ -68,7 +68,7 @@ def ingredients():
             selected_list = result,
             filters = [("Results", select)],
         )
-    return render_template('ingredients.html', ilist = ingredient_list, checked= "", data = datadict, selected=False)
+    return render_template('ingredients.html', ilist = ingredient_list, data = datadict, selected=False)
 
 @app.route('/meal-builder', methods=["GET", "POST"])
 def meal_builder():
@@ -148,6 +148,31 @@ def recipes_prep():
         data = datadict,
         filters = my_filters
     )
+
+@app.route('/search', methods=["GET", "POST"])
+def search():
+    if request.method == 'POST':
+        result = request.form.get('search')
+        data = data_pd.loc[data_pd["Full Name"].str.lower().str.contains(result.lower(), regex=False)]
+        name = data['Name']
+        print("count: ", name.shape[0])
+        if name.shape[0] == 1:
+            return render_template('search.html',
+                data = data,
+                datadict = datadict[name.item()],
+                item = result
+            )
+        else:
+            return render_template('search-plural.html',
+                data = data,
+                names = name.tolist(),
+                datadict = '',
+                item = result
+            )
+
+@app.route('/aboutus')
+def about():
+    return render_template('aboutus.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5004, debug=True)

@@ -25,6 +25,10 @@ a:hover {
 	padding-right: 10%;
 }
 
+.editor-container {
+	font-family: "Merriweather";
+}
+
 .blurb {
 	padding-right: 5%;
 }
@@ -73,7 +77,6 @@ small {
 	text-align: center;
 }
 
-
 .presets {
 	display: flex;
  	align-items: center;
@@ -86,7 +89,7 @@ small {
 
 .mealimg {
 	height: 400px;
-	width: 110%;
+	width: 100%;
 	object-fit: cover;
 }
 
@@ -95,4 +98,49 @@ small {
 	font-family: "Dancing Script";
 	color: white;
 	font-size: 40px;
+}
+
+.meallabel {
+	text-align: center; 
+	font-family: 'Merriwether'; 
+	color: white; 
+	font-size: 20px;
+}
+
+.aboutus {
+	font-family: "Merriweather";
+}
+
+.links {
+     background:none;
+     color:inherit;
+     border:none; 
+     padding:0!important;
+     font: inherit; 
+     cursor: pointer;
+}
+
+.links:hover {
+	color: #720026;
+}
+
+.links:focus {
+  outline: none;
+}
+
+.profilepic {
+	width: 200px;
+	height: 220px;
+	overflow: hidden;
+	border-radius: 100%;
+
+	border: 1px solid black;
+}
+
+.profilepic img {
+	width: auto;
+	height: 170%;
+	margin-top: -80px;
+	margin-left: -170px;
+	/*border-radius: 50%;*/
 }

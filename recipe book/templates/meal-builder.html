@@ -7,16 +7,20 @@
 	<style>
 		{% include 'css/style.css' %}
 	</style>
-	<script>
-		function locka(){
 
-		}
-	</script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
 		{% include 'navbar.html' %}
 	</nav>
+	<div class="title">
+		<img class="titleimg" src="static/images/mealbuilder_banner.png" style="width: 100%; height: 550px; object-fit: cover;">
+		<div class="titletext">
+			<strong>Shown in this picture:</strong>
+			<br>
+			<p style="font-size: 18px;">Placeholder</p>
+		</div>
+	</div>
 	<div style="width: 100%;">
 		<form method="post" class="p-5" style="background-color: #dfc5ce;" action="/meal-builder#plan">
 			<div class="form-group" id="form-group" ">
@@ -32,22 +36,23 @@
 					<div class="col-3 meal"  >
 						<p class="mealtitle">Appetizer</p>
 						<button name="change" value="appetizer" style="padding: 0px"><img  class="mealimg" src="{{ 'static/images/mealbuilder/'+appetizers[0]+'.png' }}"></button>
+						<p class="meallabel"> {{ data[appetizers[0]][3] }} </p>
 						
 					</div>
 					<div class="col-3 meal" >
 						<p class="mealtitle">Entrée</p>
 						<button name="change" value="entree" style="padding: 0px"><img id = "entree" class="mealimg" src="{{ 'static/images/mealbuilder/'+entrees[0]+'.png' }}"></button>
-						
+						<p class="meallabel"> {{ data[entrees[0]][3] }} </p>
 					</div>
 					<div class="col-3 meal" >
 						<p class="mealtitle">Dessert</p>
 						<button name="change" value="dessert" style="padding: 0px"><img id = "dessert" class="mealimg" src="{{ 'static/images/mealbuilder/'+desserts[0]+'.png' }}"></button>
-						
+						<p class="meallabel"> {{ data[desserts[0]][3] }} </p>
 					</div>
 					<div class="col-3 meal" >
 						<p class="mealtitle">Drink</p>
 						<button class="btn btn-secondary" name="change" value="drink" style="padding: 0px"><img id = "drink" class="mealimg" src="{{ 'static/images/mealbuilder/'+drinks[0]+'.png' }}"></button>
-						
+						<p class="meallabel"> {{ data[drinks[0]][3] }} </p>
 					</div>
 				
 				<!-- <div class="col-1" style="background-color: white; height:100px"></div>	 -->

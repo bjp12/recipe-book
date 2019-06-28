@@ -6,44 +6,13 @@
 	<style>
 		{% include 'css/style.css' %}
 	</style>
-	<script>
-		var slideIndex = 1;
-		showSlides(slideIndex);
 
-		function plusSlides(n) {
-		  showSlides(slideIndex += n);
-		}
-
-		function currentSlide(n) {
-		  showSlides(slideIndex = n);
-		}
-
-		function showSlides(n) {
-		  var i;
-		  var slides = document.getElementsByClassName("mySlides");
-		  var dots = document.getElementsByClassName("dot");
-		  if (n > slides.length) {slideIndex = 1}    
-		  if (n < 1) {slideIndex = slides.length}
-		  for (i = 0; i < slides.length; i++) {
-		      slides[i].style.display = "none";  
-		  }
-		  for (i = 0; i < dots.length; i++) {
-		      dots[i].className = dots[i].className.replace(" active", "");
-		  }
-		  slides[slideIndex-1].style.display = "block";  
-		  dots[slideIndex-1].className += " active";
-		}
-	</script>
 </head>
 <body>
 	<div class="main-container">
 		<nav class="navbar navbar-expand-sm justify-content-end header" style="background-color: #ffffff">
 			{% include 'navbar.html' %}
 		</nav>
-
-		<!-- <div class="pictures" style="height: 500px; background-color: #dddddd;">
-			<p>pictures</p>
-		</div> -->
 
 		<div id="myCarousel" class="carousel slide" data-ride="carousel" >
 		  <!-- Indicators -->
@@ -107,7 +76,9 @@
 		    <span class="sr-only">Next</span>
 		  </a>
 		</div>
-		<div class="editor-container" style="height: 600px; background-color: #fde2d4;">
+
+
+		<div class="editor-container" style=" background-color: #fde2d4;">
 			<div class="row">
 				<div class="col-12">
 					<h2 style="text-align: center; padding-top: 30px;">Welcome!</h2>
@@ -115,10 +86,16 @@
 			</div>
 			<div class="editor row no-gutter" >
 				<div class="blurb col-6">
-					<p>note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor note from the editor</p>
+					<p>Cooking has always been a passion of ours. We enjoy being able to create meals from start to finish and see the happy smiles on everyones face when they get to try a new dish. As such, we're always looking for a new recipe to make. Finding recipes that meet our needs, however, became difficult when we had to scroll through pages of process pictures and back stories. Tired, we came up with the idea of an easy way to access recipes, modeled after the old school recipe cards in grandmother's kitchen. Find recipes based on the meal, cusine, or how much time you have to make it. Pick the ingredients you already have to find the perfect recipe for you. Plan an entire meal centered around a recipe of your choice. We hope that this recipe book provides you an easy way to plan you meals as you cook with us.</p>
+					<div style="font-family: 'Dancing Script'; text-align: right; font-size: 30px; padding-right: 20px; line-height: .5em">
+						<!-- <p style="padding-right: 145px">Love, </p> -->
+						<p>Bijal, Sajnee & Anisha</p>
+						
+					</div>
+					
 				</div>
 				<div class="col-6"">
-					<img src="static/images/img4.jpg" style="height: 350px; width: 100%; object-fit: cover;">
+					<img src="static/images/img6.png" style="height: 350px; width: 100%; object-fit: cover;">
 				</div>
 			</div>
 		</div>	
