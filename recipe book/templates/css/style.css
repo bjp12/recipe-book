@@ -130,11 +130,13 @@ small {
 
 .profilepic {
 	width: 200px;
-	height: 220px;
+	height: 200px;
 	overflow: hidden;
-	border-radius: 100%;
-
+	border-radius: 50%;
+	object-fit: cover;
 	border: 1px solid black;
+	
+	
 }
 
 .profilepic img {
