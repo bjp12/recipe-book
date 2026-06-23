@@ -16,8 +16,10 @@ prep_col = data_pd["Prep Time"]
 # ingredient_list = [row.split(",") for row in ingredient_col]
 # ingredient_list = set(x.strip() for l in ingredient_list for x in l)
 
-with open("static/Data.csv", 'r+', encoding="utf-8") as f:
-    data = csv.DictReader(f)
+# with open("static/Data.csv", 'r+', encoding="utf-8") as f:
+with open("static/Data.json") as f:
+    data = json.load(f)
+    # data = csv.DictReader(f)
     for row in data:
         name = row['Name']
         ingredients = row['Ingredients']
