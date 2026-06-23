@@ -9,6 +9,7 @@ app = Flask(__name__)
 datadict = {}
 ingredient_list = []
 data_pd = pd.read_csv("static/Data.csv")
+data_pd.to_json("Data.json", orient="records")
 meal_col = data_pd["Meal"]
 cusine_col = data_pd["Cuisine"]
 prep_col = data_pd["Prep Time"]
