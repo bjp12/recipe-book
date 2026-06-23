@@ -1,18 +1,18 @@
 import json
 from flask import Flask
 from flask import render_template, request
-import csv
-import pandas as pd
+# import csv
+# import pandas as pd
 import re
 
 app = Flask(__name__)
 datadict = {}
-ingredient_list = []
-data_pd = pd.read_csv("static/Data.csv")
-data_pd.to_json("Data.json", orient="records")
-meal_col = data_pd["Meal"]
-cusine_col = data_pd["Cuisine"]
-prep_col = data_pd["Prep Time"]
+# ingredient_list = []
+# data_pd = pd.read_csv("static/Data.csv")
+# data_pd.to_json("Data.json", orient="records")
+# meal_col = data_pd["Meal"]
+# cusine_col = data_pd["Cuisine"]
+# prep_col = data_pd["Prep Time"]
 # ingredient_list = [row.split(",") for row in ingredient_col]
 # ingredient_list = set(x.strip() for l in ingredient_list for x in l)
 
@@ -20,34 +20,68 @@ prep_col = data_pd["Prep Time"]
 with open("static/Data.json") as f:
     data = json.load(f)
     # data = csv.DictReader(f)
+
+    meal_col = {row["Meal"] for row in data}
+    cuisine_col = {row["Cuisine"] for row in data}
+    prep_col = {row["Prep Time"] for row in data}
+
+    meals = {i: [] for i in meal_col}
+    cuisines = {i: [] for i in cuisine_col}
+    times = {i: [] for i in prep_col}
+
+    ingredient_set = set()
+    
     for row in data:
         name = row['Name']
-        ingredients = row['Ingredients']
-        for i in ingredients.split(","):
-            i = i.strip()
-            if i not in ingredient_list:
-                ingredient_list.append(i)
-        ingredient_list.sort()
+
+        meals[row["Meal"]].append(name)
+        cuisines[row["Cuisine"]].append(name)
+        times[row["Prep Time"]].append(name)
+        
+        # ingredients = row['Ingredients']
+
+        for ingredient in row["Ingredients"].split(","):
+            ingredient_set.add(ingredient.strip())
+            
+        # for i in ingredients.split(","):
+        #     i = i.strip()
+        #     if i not in ingredient_list:
+        #         ingredient_list.append(i)
+        
         recipe = re.findall(r'\d.*',row['Recipe'])
-        prep = row['Prep Time']
-        fullName = row['Full Name']
-        datadict[name] = (ingredients, recipe, prep, fullName)
+        # prep = row['Prep Time']
+        # fullName = row['Full Name']
+        datadict[name] = (
+            row["Ingredients"], 
+            recipe, 
+            row["Prep Time"], 
+            row["Full Name"]
+        )
+    # ingredient_list.sort() 
+    ingredient_list = sorted(ingredient_set)
+    
+        
 
-meals = {i:[] for i in meal_col.unique()}
-cuisines = {i: [] for i in cusine_col.unique()}
-times = {i: [] for i in prep_col.unique()}
-for item in datadict:
-    item_row = data_pd.loc[data_pd['Name'] == item]
-    name = item_row['Name'].item()
-    meals[item_row['Meal'].item()].append(name)
-    cuisines[item_row['Cuisine'].item()].append(name)
-    times[item_row['Prep Time'].item()].append(name)
+# meals = {i:[] for i in meal_col.unique()}
+# cuisines = {i: [] for i in cusine_col.unique()}
+# times = {i: [] for i in prep_col.unique()}
+# for item in datadict:
+#     item_row = data_pd.loc[data_pd['Name'] == item]
+#     name = item_row['Name'].item()
+#     meals[item_row['Meal'].item()].append(name)
+#     cuisines[item_row['Cuisine'].item()].append(name)
+#     times[item_row['Prep Time'].item()].append(name)
 
 
-appetizers = data_pd.loc[data_pd["Meal"] == "appetizer"]["Name"].tolist()
-entrees = data_pd.loc[data_pd["Meal"] == "entrée"]["Name"].tolist()
-desserts = data_pd.loc[data_pd["Meal"] == "dessert"]["Name"].tolist()
-drinks = data_pd.loc[data_pd["Meal"] == "drink"]["Name"].tolist()
+# appetizers = data_pd.loc[data_pd["Meal"] == "appetizer"]["Name"].tolist()
+# entrees = data_pd.loc[data_pd["Meal"] == "entrée"]["Name"].tolist()
+# desserts = data_pd.loc[data_pd["Meal"] == "dessert"]["Name"].tolist()
+# drinks = data_pd.loc[data_pd["Meal"] == "drink"]["Name"].tolist()
+
+appetizers = meals.get("appetizer", [])
+entrees = meals.get("entrée", [])
+desserts = meals.get("dessert", [])
+drinks = meals.get("drink", [])
 
 @app.route('/')
 def home():
@@ -60,6 +94,7 @@ def ingredients():
         select = set()
         for item in datadict:
             for x in result:
+                ingredient_lookup[name] = {
                 chosen = [i.strip() for i in datadict[item][0].split(',')]
                 if x in chosen:
                     select.add(item)
@@ -156,22 +191,54 @@ def recipes_prep():
 def search():
     if request.method == 'POST':
         result = request.form.get('search')
-        data = data_pd.loc[data_pd["Full Name"].str.lower().str.contains(result.lower(), regex=False)]
-        name = data['Name']
-        print("count: ", name.shape[0])
-        if name.shape[0] == 1:
-            return render_template('search.html',
-                data = data,
-                datadict = datadict[name.item()],
-                item = result
+        # data = data_pd.loc[data_pd["Full Name"].str.lower().str.contains(result.lower(), regex=False)]
+
+        matches = [
+            row for row in data
+            if result.lower() in row["Full Name"].lower()
+        ]
+        if len(matches) == 0:
+            return render_template(
+                'search-plural.html',
+                data=[],
+                names=[],
+                datadict='',
+                item=result
             )
-        else:
-            return render_template('search-plural.html',
-                data = data,
-                names = name.tolist(),
+        elif len(matches) == 1:
+            match = matches[0]
+        
+            return render_template(
+                'search.html',
+                data=match,
+                datadict=datadict[match["Name"]],
+                item=result
+            )
+        else: 
+            names = [row["Name"] for row in matches]
+            return render_template(
+                'search-plural.html',
+                data = matches,
+                names = names,
                 datadict = '',
                 item = result
             )
+        
+        # name = data['Name']
+        # print("count: ", name.shape[0])
+        # if name.shape[0] == 1:
+        #     return render_template('search.html',
+        #         data = data,
+        #         datadict = datadict[name.item()],
+        #         item = result
+        #     )
+        # else:
+        #     return render_template('search-plural.html',
+        #         data = data,
+        #         names = name.tolist(),
+        #         datadict = '',
+        #         item = result
+        #     )
 
 @app.route('/aboutus')
 def about():
