@@ -7,6 +7,7 @@ import re
 
 app = Flask(__name__)
 datadict = {}
+ingredient_lookup = {}
 # ingredient_list = []
 # data_pd = pd.read_csv("static/Data.csv")
 # data_pd.to_json("Data.json", orient="records")
@@ -92,12 +93,18 @@ def ingredients():
     if request.method == 'POST':
         result = request.form.getlist('ingredients')
         select = set()
-        for item in datadict:
-            for x in result:
-                ingredient_lookup[name] = {
-                chosen = [i.strip() for i in datadict[item][0].split(',')]
-                if x in chosen:
-                    select.add(item)
+        ingredient_lookup[name] = {
+            ingredient.strip()
+            for ingredient in row["Ingredients"].split(",")
+        }
+        if x in ingredient_lookup[item]:
+            select.add(item)
+        # for item in datadict:
+        #     for x in result:
+        #         ingredient_lookup[name] = {
+        #         chosen = [i.strip() for i in datadict[item][0].split(',')]
+        #         if x in chosen:
+        #             select.add(item)
 
         return render_template('ingredients.html', 
             ilist = ingredient_list, 
