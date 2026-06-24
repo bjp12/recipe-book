@@ -3,12 +3,45 @@ from flask import Flask
 from flask import render_template, request
 import re
 
+# --------------------------------------------------
+# Application setup
+# --------------------------------------------------
+
 app = Flask(__name__)
+
+# Stores recipe information keyed by recipe name.
+# Format:
+# {
+#   "Avocado Toast": (
+#       ingredients,
+#       recipe_steps,
+#       prep_time,
+#       full_name
+#   )
+# }
 datadict = {}
+
+# Stores ingredients for each recipe as a set.
+# Used to quickly check whether a recipe contains
+# a selected ingredient in the ingredient search page.
+#
+# Example:
+# {
+#   "Avocado Toast": {"Bread", "Butter", "Avocado", "Salt", "Pepper", "Red Pepper"}
+# }
 ingredient_lookup = {}
+
+
+# --------------------------------------------------
+# Load and organize recipe data
+# --------------------------------------------------
 
 with open("static/Data.json") as f:
     data = json.load(f)
+
+    # --------------------------------------------------
+    # Build recipe category lookups
+    # --------------------------------------------------
 
     meal_col = {row["Meal"] for row in data}
     cuisine_col = {row["Cuisine"] for row in data}
@@ -19,6 +52,10 @@ with open("static/Data.json") as f:
     times = {i: [] for i in prep_col}
 
     ingredient_set = set()
+    
+    # --------------------------------------------------
+    # Process each recipe and build lookup dictionaries
+    # --------------------------------------------------
     
     for row in data:
         name = row['Name']
@@ -44,14 +81,32 @@ with open("static/Data.json") as f:
         )
     ingredient_list = sorted(ingredient_set)
 
+
+# --------------------------------------------------
+# Precomputed recipe groups used by the meal builder
+# --------------------------------------------------
+
 appetizers = meals.get("appetizer", [])
 entrees = meals.get("entrée", [])
 desserts = meals.get("dessert", [])
 drinks = meals.get("drink", [])
 
+
+# --------------------------------------------------
+# Routes
+# --------------------------------------------------
+
+# --------------------------------------------------
+# Home page
+# --------------------------------------------------
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
+# --------------------------------------------------
+# Ingredient search
+# --------------------------------------------------
 
 @app.route('/ingredients', methods=["GET","POST"])
 def ingredients():
@@ -72,6 +127,10 @@ def ingredients():
             filters = [("Results", select)],
         )
     return render_template('ingredients.html', ilist = ingredient_list, data = datadict, selected=False)
+
+# --------------------------------------------------
+# Meal builder
+# --------------------------------------------------
 
 @app.route('/meal-builder', methods=["GET", "POST"])
 def meal_builder():
@@ -123,6 +182,10 @@ def meal_builder():
             drinks = drinks
         )
 
+# --------------------------------------------------
+# Recipe browsing and filtering
+# --------------------------------------------------
+
 @app.route('/recipes')
 @app.route('/recipes-time')
 def recipes_time():
@@ -151,6 +214,10 @@ def recipes_prep():
         data = datadict,
         filters = my_filters
     )
+
+# --------------------------------------------------
+# Recipe search
+# --------------------------------------------------
 
 @app.route('/search', methods=["GET", "POST"])
 def search():
@@ -187,6 +254,10 @@ def search():
                 datadict = '',
                 item = result
             )
+
+# --------------------------------------------------
+# About page
+# --------------------------------------------------
 
 @app.route('/aboutus')
 def about():
