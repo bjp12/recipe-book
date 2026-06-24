@@ -35,14 +35,19 @@ with open("static/Data.json") as f:
     for row in data:
         name = row['Name']
 
+        ingredients = {
+            ingredient.strip()
+            for ingredient in row["Ingredients"].split(",")
+        }
+
+        ingredient_lookup[name] = ingredients
+        ingredient_set.update(ingredients)
+        
         meals[row["Meal"]].append(name)
         cuisines[row["Cuisine"]].append(name)
         times[row["Prep Time"]].append(name)
         
         # ingredients = row['Ingredients']
-
-        for ingredient in row["Ingredients"].split(","):
-            ingredient_set.add(ingredient.strip())
             
         # for i in ingredients.split(","):
         #     i = i.strip()
@@ -93,12 +98,11 @@ def ingredients():
     if request.method == 'POST':
         result = request.form.getlist('ingredients')
         select = set()
-        ingredient_lookup[name] = {
-            ingredient.strip()
-            for ingredient in row["Ingredients"].split(",")
-        }
-        if x in ingredient_lookup[item]:
-            select.add(item)
+        
+        for item in datadict:
+            for x in result:
+                if x in ingredient_lookup[item]:
+                    select.add(item)
         # for item in datadict:
         #     for x in result:
         #         ingredient_lookup[name] = {
