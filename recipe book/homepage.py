@@ -1,8 +1,6 @@
 import json
 from flask import Flask
 from flask import render_template, request
-# import csv
-# import pandas as pd
 import re
 
 app = Flask(__name__)
@@ -65,12 +63,6 @@ def ingredients():
             for x in result:
                 if x in ingredient_lookup[item]:
                     select.add(item)
-        # for item in datadict:
-        #     for x in result:
-        #         ingredient_lookup[name] = {
-        #         chosen = [i.strip() for i in datadict[item][0].split(',')]
-        #         if x in chosen:
-        #             select.add(item)
 
         return render_template('ingredients.html', 
             ilist = ingredient_list, 
@@ -164,8 +156,7 @@ def recipes_prep():
 def search():
     if request.method == 'POST':
         result = request.form.get('search')
-        # data = data_pd.loc[data_pd["Full Name"].str.lower().str.contains(result.lower(), regex=False)]
-
+        
         matches = [
             row for row in data
             if result.lower() in row["Full Name"].lower()
@@ -196,22 +187,6 @@ def search():
                 datadict = '',
                 item = result
             )
-        
-        # name = data['Name']
-        # print("count: ", name.shape[0])
-        # if name.shape[0] == 1:
-        #     return render_template('search.html',
-        #         data = data,
-        #         datadict = datadict[name.item()],
-        #         item = result
-        #     )
-        # else:
-        #     return render_template('search-plural.html',
-        #         data = data,
-        #         names = name.tolist(),
-        #         datadict = '',
-        #         item = result
-        #     )
 
 @app.route('/aboutus')
 def about():
