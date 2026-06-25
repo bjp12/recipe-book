@@ -223,11 +223,14 @@ def recipes_prep():
 def search():
     if request.method == 'POST':
         result = request.form.get('search')
+
+        print("Search term:", result)
         
         matches = [
             row for row in data
             if result.lower() in row["Full Name"].lower()
         ]
+
         if len(matches) == 0:
             return render_template(
                 'search-plural.html',
@@ -246,7 +249,7 @@ def search():
                 item=result
             )
         else: 
-            names = [row["Name"] for row in matches]
+            names = [row["Full Name"] for row in matches]
             return render_template(
                 'search-plural.html',
                 data = matches,

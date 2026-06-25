@@ -14,7 +14,7 @@
 		</nav>
 		<form method="post" action="/search">
 			<ul>
-			{% for name in data['Full Name'] %}
+			{% for name in names %}
 				<li><input type="submit" class="links" name="search" value="{{ name }}" ></li>
 			{% endfor %}
 			</ul>
