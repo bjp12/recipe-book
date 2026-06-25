@@ -13,10 +13,10 @@ a:hover {
     vertical-align: middle;
 }
 
-.d-block {
+/* .d-block { */
 	/*vertical-align: middle;*/
 	/*object-fit: cover;*/
-}
+/* */
 
 .editor {
 	padding-top: 5%;
@@ -128,21 +128,35 @@ small {
   outline: none;
 }
 
-.profilepic {
+/* .profilepic {
 	width: 200px;
 	height: 200px;
 	overflow: hidden;
 	border-radius: 50%;
 	object-fit: cover;
 	border: 1px solid black;
-	
-	
+} */
+
+.profilepic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 10% center;  /* move image to the right */
 }
 
-.profilepic img {
+/* .profilepic img {
 	width: auto;
 	height: 170%;
 	margin-top: -80px;
 	margin-left: -170px;
-	/*border-radius: 50%;*/
+	border-radius: 50%;
+} */
+
+.aboutus{
+	display: flex;                
+    align-items: center;         
+    justify-content: flex-start;  
+    gap: 20px;
 }
+
